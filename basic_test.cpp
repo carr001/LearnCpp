@@ -81,3 +81,7 @@ int basic_test2() {
     return 0;
 }
 
+int basic_test3() {
+	cout << "GUARD="<< GUARD << endl;
+	return 0;
+}

@@ -2,6 +2,7 @@
 #include"std_test.h"
 #include"python_test.h"
 #include"basic_test.h"
+#include"para_test.h"
 //#include"datastructure_test.h"
 using namespace std;
 int main() {
