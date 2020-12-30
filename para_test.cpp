@@ -1,4 +1,7 @@
 #include"para_test.h"
+#include<iostream>
+#include<time.h>
+using namespace std;
 
 int testjob() {
 #pragma omp parallel for num_threads(8)

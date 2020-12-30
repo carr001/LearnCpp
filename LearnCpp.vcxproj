@@ -148,12 +148,15 @@
     <ClCompile Include="datastructure_test.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="basic_test.cpp" />
+    <ClCompile Include="para_test.cpp" />
     <ClCompile Include="python_test.cpp" />
     <ClCompile Include="std_test.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="basic_test1.h" />
     <ClInclude Include="datastructure_test.h" />
     <ClInclude Include="basic_test.h" />
+    <ClInclude Include="para_test.h" />
     <ClInclude Include="python_test.h" />
     <ClInclude Include="std_test.h" />
   </ItemGroup>

@@ -6,7 +6,8 @@
 //#include"datastructure_test.h"
 using namespace std;
 int main() {
-	basic_test2();
+	para_test1();
+	//basic_test2();
 	//std_test1();
 	//std_test2();
 	//std_test4();

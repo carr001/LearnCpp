@@ -1,1 +1,1 @@
-para_test1();
+int para_test1();
