@@ -6,13 +6,19 @@ int class_test1();
 class Complex
 {
 public:
-	//Complex(double i = 0, double j = 0) :re(i), im(j) {};//这个与下面的是冲突的！！   侯捷 P3 - 27 : 12
-
+	Complex(double i, double j) :re(i), im(j) {};//这个与下面不冲突
+	//Complex(double i = 0, double j = 0) :re(i), im(j) {};//这个与下面的是冲突的！！   详见 侯捷 P3 - 27 : 12
+	
 	Complex() :re(0), im(0) {};
 	//Complex(){};
 	//~Complex();
-	double real() { return re; };
-	double imag() { return im; };
+
+	// 如果不加 const， 那么使用class_test1中 c 会出错    详见 侯捷 P4 - 10:10
+	//double real(){ return re; };
+	//double imag(){ return im; };
+	
+	double real()const { return re; };
+	double imag() const{ return im; };
 
 private:
 	double re, im;
