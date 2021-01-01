@@ -94,7 +94,8 @@ int basic_test4() {
     cout << "####################  in basic_test 4 ##################" << endl;
     int b = 2;
     func(b);
-    //b = func(b);
+    int& c = func(b);
     cout << b << endl;
+    cout << c << endl;
     return 0;
 }
