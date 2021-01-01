@@ -3,7 +3,7 @@
 #ifndef __CLASS_TEST__
 #define __CLASS_TEST__
 int class_test1();
-int class_test2();
+//int class_test2();
 class Complex
 {
 public:
