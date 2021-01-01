@@ -85,3 +85,16 @@ int basic_test3() {
 	cout << "GUARD="<< GUARD << endl;
 	return 0;
 }
+
+int& func(int &a) {
+    a++;
+    return a;
+}
+int basic_test4() {
+    cout << "####################  in basic_test 4 ##################" << endl;
+    int b = 2;
+    func(b);
+    //b = func(b);
+    cout << b << endl;
+    return 0;
+}
