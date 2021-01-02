@@ -1,4 +1,5 @@
 #include"basic_test.h"
+#include"basic_test1.h"
 #include<iostream>
 
 using namespace std;
@@ -91,11 +92,30 @@ int& func(int &a) {
     return a;
 }
 int basic_test4() {
-    cout << "####################  in basic_test 4 ##################" << endl;
+	cout << "####################  in basic_test 4 ##################" << endl;
+	// test reference 
     int b = 2;
     func(b);
     int& c = func(b);
     cout << b << endl;
     cout << c << endl;
     return 0;
+}
+
+int basic_test5() {
+	cout << "####################  in basic_test 5 ##################" << endl;
+	int b = 40;
+	int c = 50;
+	const int a = 2; //a = 4; error 
+	
+	const int * const p = &a;
+	//int * const p = &a; error 
+
+	//指针本身是否可以指向其他内容
+	int * const p2 = &b;
+	//p2 = &c;// error 
+	
+	//指针所指的内容是否可以改变
+	*p2 = 6;
+	//*p = 1; error
 }
