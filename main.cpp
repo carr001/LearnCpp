@@ -21,7 +21,8 @@ int main() {
 	//py_test4();
 	//py_test5();
 
-	class_test3();
+	//class_test3();
+	class_test6();
 	system("pause");
 	return 0;
 }

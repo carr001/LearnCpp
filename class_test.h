@@ -8,6 +8,9 @@ using namespace std;
 int class_test1();
 int class_test2();
 int class_test3();
+int class_test4();
+int class_test5();
+int class_test6();
 class Complex
 {
 public:
@@ -94,6 +97,40 @@ public:
 private:
 	A();
 	A(const A& rhs);
+};
+/************ constructor and deconstructor under inheritance and composition***************/
+class Base
+{
+public:
+	Base() {
+		cout << "ctor of base" << endl;
+	}
+	~Base() {
+		cout << "dtor of base" << endl;
+	}
+};
+class Component
+{
+public:
+	Component() {
+		cout << "ctor of component" << endl;
+	}
+	~Component() {
+		cout << "dtor of component" << endl;
+	}
+};
+class Derived : public Base
+{
+public:
+	Derived() {
+		cout << "ctor of derived" << endl;
+	}
+	~Derived() {
+		cout << "dtor of derived" << endl;
+	}
+protected:
+	Component c;
+private:
 };
 
 //double Acount::m_rate = 0;

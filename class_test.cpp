@@ -1,5 +1,6 @@
 #pragma once
 #include<iostream>
+#include<vector>
 #include "class_test.h"
 
 using namespace std;
@@ -57,6 +58,32 @@ int class_test3() {
 int class_test4() {
 	cout << "########################### in class_test4 ###################" << endl;
 	// 测试调用singleton 也失败了
-	A::getInstance().setup();
+	//A::getInstance().setup();
 	return 0;
 }
+void objectplay(void)//通过调用这个函数观察对象的析构与构造函数
+{
+	Derived d;
+}
+int class_test5() {
+	cout << "########################### in class_test5 ###################" << endl;
+	// constructor and deconstructor under inheritance and composition
+	objectplay();
+	return 0;
+}
+int class_test6() {
+	cout << "########################### in class_test6 ###################" << endl;
+	// test bast 类
+	//vector<void> a;
+	vector<Base> a;
+	//int b[10] = { 0 };
+	for (int i = 0;i < 10;i++) {
+		a.push_back(*(new Derived()));
+	}
+	//for (int i = 0;i < 10;i++) {
+	//	//cout <<typename(i) << " ";
+	//	cout << a[i] << endl;
+	//}
+	return 0;
+}
+
