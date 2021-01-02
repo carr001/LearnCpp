@@ -41,3 +41,22 @@ int class_test2() {
 	cout << a.real() << " " << a.imag() << " " << *j << endl;
 	return 0;
 }
+int class_test3() {
+	cout << "########################### in class_test3###################" << endl;
+	// 测试类与对象能否直接访问静态成员与静态函数，目前测试失败了
+	////cout << Acount::m_rate << endl;
+	//Acount::set_rate(0);
+	//Acount a;
+	////a.m_rate = 1;
+	////cout << a.m_rate << endl;
+
+	//a.set_rate(2);
+	////cout << Acount::m_rate << endl;
+	return 0;
+}
+int class_test4() {
+	cout << "########################### in class_test4 ###################" << endl;
+	// 测试调用singleton 也失败了
+	A::getInstance().setup();
+	return 0;
+}

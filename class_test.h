@@ -2,8 +2,12 @@
 
 #ifndef __CLASS_TEST__
 #define __CLASS_TEST__
+#include<iostream>
+using namespace std;
+
 int class_test1();
-//int class_test2();
+int class_test2();
+int class_test3();
 class Complex
 {
 public:
@@ -37,6 +41,7 @@ private:
 
 //Complex::~Complex() {
 //}
+/***********************String class**********************/
 
 class String {
 public:
@@ -49,25 +54,49 @@ public:
 private:
 	char* m_data;
 };
-String::String(const char* cstr) {
-	if (cstr) {
-		m_data = new char[strlen(cstr)];
-		strcpy(m_data,cstr);
-	}
-	else {
-		m_data = new char[1];
-		*m_data = '\0';
-	}
-}
-inline String& String::operator=(const String& str) {
-	if (*this == str) {//下面会出错
-		return *this;
-	}
-	delete[] m_data;
-	m_data = new char[strlen(str.m_data)+1];//同一类的所有对象都是friend
-	strcpy(m_data,str.m_data);
-	return *this;
-}
+//String::String(const char* cstr) {
+//	if (cstr) {
+//		m_data = new char[strlen(cstr)];
+//		strcpy(m_data,cstr);
+//	}
+//	else {
+//		m_data = new char[1];
+//		*m_data = '\0';
+//	}
+//}
+//inline String& String::operator=(const String& str) {
+//	if (*this == str) {//下面会出错
+//		return *this;
+//	}
+//	delete[] m_data;
+//	m_data = new char[strlen(str.m_data)+1];//同一类的所有对象都是friend
+//	strcpy(m_data,str.m_data);
+//	return *this;
+//}
+/***********************Account class**********************/
+class Acount {
+
+public:
+	static double m_rate;
+
+	static void set_rate(const double& x) { m_rate = x; };
+
+private:
+
+};
+/**********************class A for singleton***********************/
+class A {
+public:
+	static A& getInstance() {
+		static A a;
+		return a; };
+	void setup() const{ cout << "hello singleton" << endl; }
+private:
+	A();
+	A(const A& rhs);
+};
+
+//double Acount::m_rate = 0;
 #endif // !__CLASS_TEST__
 
 
