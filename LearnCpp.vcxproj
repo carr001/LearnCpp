@@ -152,6 +152,7 @@
     <ClCompile Include="para_test.cpp" />
     <ClCompile Include="python_test.cpp" />
     <ClCompile Include="std_test.cpp" />
+    <ClCompile Include="template_test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basic_test1.h" />
@@ -161,6 +162,7 @@
     <ClInclude Include="para_test.h" />
     <ClInclude Include="python_test.h" />
     <ClInclude Include="std_test.h" />
+    <ClInclude Include="template_test.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="py_test.py" />
