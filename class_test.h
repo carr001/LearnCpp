@@ -3,6 +3,7 @@
 #ifndef __CLASS_TEST__
 #define __CLASS_TEST__
 #include<iostream>
+#include<string>//cout输出string需要包含头文件
 using namespace std;
 
 int class_test1();
@@ -11,6 +12,9 @@ int class_test3();
 int class_test4();
 int class_test5();
 int class_test6();
+int class_test7();
+int class_test8();
+int class_test9();
 class Complex
 {
 public:
@@ -77,16 +81,18 @@ private:
 //	return *this;
 //}
 /***********************Account class**********************/
-class Acount {
-
+class Account {
 public:
 	static double m_rate;
-
+	static int count;
+	static int getm_rate() { return m_rate; };
 	static void set_rate(const double& x) { m_rate = x; };
-
+	Account() { count++; }
 private:
 
 };
+//static double m_rate = 0;
+// int class_test_var = 2;不能
 /**********************class A for singleton***********************/
 class A {
 public:
@@ -132,8 +138,62 @@ protected:
 	Component c;
 private:
 };
+/************ explict ***************/
+class Fraction {
+public:
+	//Fraction(int num,int dem=1);
+	//Fraction(int num, int dem = 1) { m_numerator = num; m_domenator = dem; };//有多个运算符 "+" 与这些操作数匹配:“Fraction::operator +”: 2 个重载有相似的转换	x
+	explicit Fraction(int num, int dem = 1) { m_numerator = num; m_domenator = dem; };// 无法从“double”转换为“Fraction”
 
-//double Acount::m_rate = 0;
+	//explicit Fraction(double num, double dem = 1) { m_numerator = num; m_domenator = dem; };
+	operator double()const { return (double)m_numerator / m_domenator; };
+	Fraction operator+(Fraction const &rhs) { return Fraction(2, 3); };
+	//Fraction operator+(int const &rhs) { return Fraction(2, 3); };
+private:
+	int m_numerator;
+	int m_domenator;
+};
+/************ pointer like class ***************/
+struct Foo {
+//public:
+	//Foo() {  }
+	void method() { cout << "hello Foo" << endl; }
+};
+template<class T>
+class shared_ptr2 {//如果是shared_ptr，那么 error 2872:不明确的符号 因为命名空间中已经由shared_ptr了
+public:
+	T& operator*()const { return *px; };
+	T* operator->()const { return px; };
+	shared_ptr2(T* p) :px(p) {};
+private:
+	T* px;
+	long * pn;
+};
+
+//template <class T, class Ref， class Ptr>
+//struct __list_iterator { //这是一个链表
+//	typedef __list_iterator<T, Ref， Ptr> self;
+//	typedef Ptr pointer;
+//	typedef Ref pointer;
+//	typedef __list_node<T>* link_type;
+//	link_type node;
+//	bool operator==(const self& x) const { return node == x.node; }
+//	bool operator==(const self& x) const { return node != x.node; }
+//	reference operator*() const { return (*node).data; }
+//	pointer operator-> const { return &(operator*())}
+//	self& operator++() { node = (link_type)((*node).next); return *this }
+//	self& operator++(int) { self tmp = *this; ++*this; return tmp; }
+//	self& operator--() { node = (link_type)((*node).prep); return *this }
+//	self& operator--(int) { self tmp = *this; --*this; return tmp; }
+//};
+
+class Func {
+public:
+	void operator() (const string& str) const {
+		cout << str << endl;
+	}
+};
+
 #endif // !__CLASS_TEST__
 
 

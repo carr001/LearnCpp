@@ -42,17 +42,22 @@ int class_test2() {
 	cout << a.real() << " " << a.imag() << " " << *j << endl;
 	return 0;
 }
+double Account::m_rate = 0;//不能放在 class_test.h中
+int Account::count = 0;//不能放在 class_test.h中
 int class_test3() {
 	cout << "########################### in class_test3###################" << endl;
 	// 测试类与对象能否直接访问静态成员与静态函数，目前测试失败了
-	////cout << Acount::m_rate << endl;
-	//Acount::set_rate(0);
-	//Acount a;
-	////a.m_rate = 1;
-	////cout << a.m_rate << endl;
+	//cout << Acount::m_rate << endl;
+	Account::set_rate(0);
+	Account a;
+	a.m_rate = 0.4;
+	cout << a.m_rate << endl;
+	cout << a.count << endl;
+	Account* b= new Account[10];
+	cout << a.count << endl;
 
-	//a.set_rate(2);
-	////cout << Acount::m_rate << endl;
+	a.set_rate(2);
+	//cout << Acount::m_rate << endl;
 	return 0;
 }
 int class_test4() {
@@ -87,3 +92,28 @@ int class_test6() {
 	return 0;
 }
 
+int class_test7() {
+	cout << "########################### in class_test7 ###################" << endl;
+	// test explicit
+	Fraction a(3, 5);
+	//double d = 4 + a;
+
+	//Fraction d2 = a + 4;
+	return 0;
+}
+int class_test8() {
+	cout << "########################### in class_test8 ###################" << endl;
+	shared_ptr2<Foo> sp(new Foo);
+
+	// note: 从类内部来看，*sp会调用函数返回一个对象,消耗*。sp->也会调用函数，返回一个指针，那么sp->method就变成了  px method，不合理，因此编译器会自动变成px->method
+	Foo f(*sp);// 拷贝构造
+	sp->method();
+	
+	return 0;
+}
+int class_test9() {
+	cout << "########################### in class_test9 ###################" << endl;
+	Func myFunc;
+	myFunc("helloworld!");
+	return 0;
+}
