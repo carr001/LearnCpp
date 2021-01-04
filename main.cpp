@@ -9,6 +9,7 @@ using namespace std;
 int main() {
 	//basic_test2();
 	//basic_test4();
+	basic_test6();
 	
 	//std_test1();
 	//std_test2();
@@ -23,7 +24,7 @@ int main() {
 
 	//class_test3();
 	//class_test6();
-	class_test9();
+	//class_test9();
 	system("pause");
 	return 0;
 }

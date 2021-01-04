@@ -1,6 +1,7 @@
 #include"basic_test.h"
 #include"basic_test1.h"
 #include<iostream>
+#include<vector>
 
 using namespace std;
 int basic_test1() {
@@ -104,7 +105,7 @@ int basic_test4() {
     int b = 2;
 	int& a = b;
 	cout << sizeof(a) << endl;
-	cout << sizeof(b) << endl;//底层 a是一个指针，但是编译器会给一个假象，reference的大小与被reference的对象相同，从而达到用reference b代表a的效果
+	cout << sizeof(b) << endl;//底层 a是一个指针(引用就是指针)，但是编译器会给一个假象，reference的大小与被reference的对象相同，从而达到用reference b代表a的效果
 
     func(b);
     int& c = func(b);
@@ -129,4 +130,29 @@ int basic_test5() {
 	//指针所指的内容是否可以改变
 	*p2 = 6;
 	//*p = 1; error
+	return 0;
+}
+int basic_test6() {
+	cout << "####################  in basic_test 6 ##################" << endl;
+	// range based for (其他方式：迭代器、 foreach) 一个语法糖
+	vector<int> a;
+	for (int i : {1, 2, 3, 4}) {
+		a.push_back(i);
+	}
+	for (int i : a) {
+		cout << i << endl;
+	}
+	for (int i : a) {// return by value ,对原来起不作用
+		i *= 3;
+	}
+	for (int i : a) { 
+		cout << i << endl;
+	}
+	for (int& i : a) {// return by reference ,对原来起作用
+		i *= 3;
+	}
+	for (int i : a) {
+		cout << i << endl;
+	}
+	//总结：说明语法糖的入参是by reference，而且出参是by reference，给调用者是否修改内容的自由
 }
