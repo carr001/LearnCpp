@@ -114,6 +114,7 @@ int class_test8() {
 int class_test9() {
 	cout << "########################### in class_test9 ###################" << endl;
 	Func myFunc;
-	myFunc("helloworld!");
+	myFunc("helloworld!");//这个对象像函数，与python对比。 定义了一个模型的实例model，然后model(input)就前向传递
+	Func ()("helloworld!");//与上面相同，这里定义了一个临时对象
 	return 0;
 }

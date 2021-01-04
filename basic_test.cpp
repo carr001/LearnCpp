@@ -91,10 +91,21 @@ int& func(int &a) {
     a++;
     return a;
 }
+//下面两个函数ambigous，因为它们具有相同的签名 same signature。
+//double image(const double& im) {}
+double image(const double im) {}
+
+//假设const之后可以共存，因为const也是signature的一部分，当然，只能存在于类中。
+//double image(const double& im) const {}
+//double image(const double im) {}
 int basic_test4() {
 	cout << "####################  in basic_test 4 ##################" << endl;
 	// test reference 
     int b = 2;
+	int& a = b;
+	cout << sizeof(a) << endl;
+	cout << sizeof(b) << endl;//底层 a是一个指针，但是编译器会给一个假象，reference的大小与被reference的对象相同，从而达到用reference b代表a的效果
+
     func(b);
     int& c = func(b);
     cout << b << endl;
