@@ -15,6 +15,8 @@ int class_test6();
 int class_test7();
 int class_test8();
 int class_test9();
+int class_test10();
+int class_test11();
 class Complex
 {
 public:

@@ -134,3 +134,19 @@ int class_test10() {
 	pa->vfunc1();// virtual function   dynamic binding
 	return 0;
 }
+int class_test11() {
+	cout << "########################### in class_test11 ###################" << endl;
+	// test placement new  https://www.youtube.com/watch?v=2bsGFQgBMXs
+
+	//预先向os申请大的内存空间
+	char* mem = new char[10 * sizeof(A2)];
+	// 将对象放置（place）在申请的内存中
+	A2* obj1 = new (&mem[0]) A2();
+	A2* obj2 = new (&mem[1]) A2();
+	A2* obj3 = new (&mem[2]) A2();
+	// 可以随时析构，灵活使用申请的内存
+	obj1->~A2();
+	obj2->~A2();
+	obj3->~A2();
+	return 0;
+}
