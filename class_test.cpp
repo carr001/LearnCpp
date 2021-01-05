@@ -118,3 +118,19 @@ int class_test9() {
 	Func ()("helloworld!");//与上面相同，这里定义了一个临时对象
 	return 0;
 }
+int class_test10() {
+	cout << "########################### in class_test10 ###################" << endl;
+	// test dynamic binding
+	// 动态绑定三个条件：指针调用函数；指针向上转型；调用虚函数
+
+	B b;
+	A2 a = (A2)b;
+	a.vfunc1(); // static binding  call
+
+	A2* pa = new B;//point and upcast 
+	pa->vfunc1(); // virtual function   dynamic binding
+
+	pa = &b;//point and upcast 
+	pa->vfunc1();// virtual function   dynamic binding
+	return 0;
+}

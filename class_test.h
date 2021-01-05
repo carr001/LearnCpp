@@ -193,7 +193,26 @@ public:
 		cout << str << endl;
 	}
 };
+/*****************Dynamic binding****************/
+class A2 {
+public:
+	virtual void vfunc1()const {};
+	virtual void vfunc2()const {};
 
+	void func1() {};
+	void func2() {};
+
+};
+class B :public A2 {
+public:
+	virtual void vfunc1()const {};
+	void func2() {};
+};
+class C :public B {
+public:
+	virtual void vfunc1()const {};
+	void func2() {};
+};
 #endif // !__CLASS_TEST__
 
 
