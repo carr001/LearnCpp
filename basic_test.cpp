@@ -94,7 +94,7 @@ int& func(int &a) {
 }
 //下面两个函数ambigous，因为它们具有相同的签名 same signature。
 //double image(const double& im) {}
-double image(const double im) {}
+double image(const double im) { return 0; }
 
 //假设const之后可以共存，因为const也是signature的一部分，当然，只能存在于类中。
 //double image(const double& im) const {}
@@ -155,4 +155,21 @@ int basic_test6() {
 		cout << i << endl;
 	}
 	//总结：说明语法糖的入参是by reference，而且出参是by reference，给调用者是否修改内容的自由
+	return 0;
+}
+int basic_test7() {
+	cout << "####################  in basic_test 7 ##################" << endl;
+	// reinterpret_cast  类似于c中强制转换（直接将指针的值进行复制），后果自负。强制复制。
+	int n = 1;
+	//c语言中
+	int*p = (int*)n;
+	//C++中等价
+	//int *p = reinterpret_cast<int*>(n);
+
+	// 隐式转换 static_cast
+	int m = 5;
+	int f = 10.00f;
+	f = m;//在内部将整形的5转化为浮点型，因此是隐式转换
+	f = static_cast<float>(n);
+	return 0;
 }

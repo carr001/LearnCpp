@@ -8,4 +8,5 @@ int basic_test3();
 int basic_test4();
 int basic_test5();
 int basic_test6();
+int basic_test7();
 #endif
