@@ -2,6 +2,7 @@
 #ifndef __ALLOCATOR_TEST__
 #define __ALLOCATOR_TEST__
 #include<iostream>
+#include"class_test.h"
 //#include<cstddef>
 using namespace std;
 class Screen {// À´×Ôºî½Ý£¬ºî½ÝÀ´×ÔC++ primer3 p765
@@ -33,10 +34,202 @@ void* Screen::operator new(size_t size) {//Õâ¸ösizeµÄ×÷ÓÃÊÇnewµÄÊ±ºò½ÓÊÜ ÀàµÄ´óÐ
 	frontStore = frontStore->next;
 	return p;
 }
-void Screen::operator delete(void * p, size_t size) {
+void Screen::operator delete(void * p, size_t size) {//Ã»ÓÐ freeÄÚ´æ£¬µ«ÊÇÒ²Ã»ÓÐÄÚ´æÐ¹Â©¡£ÕâÑù²Ù×÷ÏµÍ³Ã»·¨µÃµ½Ê£ÓàÄÚ´æ£¬ÕâµãºóÃæ½éÉÜÈçºÎ¹é»¹
 	(static_cast<Screen*>(p))->next = frontStore;
 	frontStore = static_cast<Screen*>(p);
 }
+//**************** per class allocator 2*********************//
+#include <iostream>
+#include <cstddef>
+using namespace std;
+//ref. Effective C++ 2e,item 10
+//1.mallocÐ§ÂÊ
+//2.cookie¹ÜÀí
+//per-class allocator,2
+class Airplane {
+private:
+	struct AirplaneRep {//ÕâÀï×öÉùÃ÷
+		unsigned long miles;
+		char type;
+	};
+private:
+	union {//Êµ¼ÊµÄ³ÉÔ±±äÁ¿£¬¿ÕÏÐÊ±ÊÇnext AirplaneµÄµØÖ·£¬²»¿ÕÏÐÊ±ÊÇ rep
+		AirplaneRep rep;  //´Ë´¦Õë¶ÔÊ¹ÓÃÖÐµÄobjects
+		Airplane* next;  //´¦Õë¶Ôfree listÉÏµÄobject
+				//embeded pointer Ç¶ÈëÊ½Ö¸Õë
+	};
+public:
+	unsigned long getMiles() {
+		return rep.miles;
+	}
+	char getType() {
+		return rep.type;
+	}
+	void set(unsigned long m, char t) {
+		rep.miles = m;
+		rep.type = t;
+	}
+public:
+	static void* operator new(size_t size);
+	static void operator delete(void* deadObject, size_t size);
+private:
+	static const int BLOCK_SIZE;
+	static Airplane* headOfFreeList;
+};
+Airplane* Airplane::headOfFreeList = 0;
+const int Airplane::BLOCK_SIZE = 512;
+
+void* Airplane::operator new(size_t size) {
+	//Èç¹û´óÐ¡ÓÐÎó£¬×ª½»¸ø::operator new()
+	//¼Ì³ÐÌåÏµÖÐ
+	if (size != sizeof(Airplane)) {
+		return ::operator new(size);
+	}
+
+	Airplane *p = headOfFreeList;
+	if (p) {
+		//Èç¹ûpÓÐÐ§£¬¾Í°ÑlistÍ·²¿ÏÂÒÆÒ»¸öÔªËØ
+		headOfFreeList = p->next;
+	}
+	else {
+		//free listÊÇ¿ÕµÄ£¬ËùÒÔÉêÇëÒ»´ó¿é
+		Airplane* newBlock = static_cast<Airplane*>
+			(::operator new(BLOCK_SIZE * sizeof(Airplane)));
+
+		//½«Ð¡¿é´®³ÉÒ»¸öfree list,
+		//µ«Ìø¹ý #0, ÒòËü½«±»´«»Ø×öÎª±¾´Î³É¹û
+		for (int i = 1; i < BLOCK_SIZE - 1; ++i) {
+			newBlock[i].next = &newBlock[i + 1];
+		}
+		newBlock[BLOCK_SIZE - 1].next = 0;
+		p = newBlock;
+		headOfFreeList = &newBlock[1];
+	}
+	return p;
+}
+void Airplane::operator delete(void* deadObject, size_t size) {
+	if (deadObject == 0) return;
+	if (size != sizeof(Airplane)) {
+		::operator delete(deadObject);
+		return;
+	}
+	Airplane* carcass =
+		static_cast<Airplane*>(deadObject);
+
+	carcass->next = headOfFreeList;
+	headOfFreeList = carcass;
+}
+//******************  static allocator***************************//
+class allocator_m
+{
+private:
+	struct obj//Óëunion²»Í¬£¬ÕâÀïÖ»ÉùÃ÷£¬ÓÃÓÚ×ªÐÍ
+	{
+		obj* next;	//embeded pointer
+	};
+public:
+	void* allocate(size_t size) {
+		obj *p;
+		if (!freeStore) {
+			freeStore = p = (obj*)malloc(size * CHUNK);
+
+			for (int i = 0; i < CHUNK - 1; ++i) {
+				p->next = (obj*)((char*)p + size);// Ç°ÃæÉùÃ÷µÄobj struc¶Ô·ÖÅäµÄÄÚ´æ½øÐÐ×ªÐÍ¡£
+				p = p->next;
+			}
+			p->next = nullptr;
+		}
+		p = freeStore;
+		freeStore = freeStore->next;
+		return p;
+	}
+
+	void deallocate(void* pDead, size_t size) {
+		((obj*)pDead)->next = freeStore;
+		freeStore = (obj*)pDead;
+	}
+private:
+	obj *freeStore = nullptr;
+	const int CHUNK = 5;	//Ã¿´Î·ÖÅäµÄ´óÐ¡
+};
+//²âÊÔÀà Foo
+class Foo
+{
+private:
+	long lData;
+	string str;
+	static allocator_m alloc;
+public:
+	Foo(long l) : lData(l) {}
+	void* operator new(size_t size) {
+		return alloc.allocate(size);
+	}
+	void operator delete(void* pDead, size_t size) {
+		alloc.deallocate(pDead, size);
+	}
+};
+
+allocator_m Foo::alloc;
+
+//²âÊÔÀà Goo
+class Goo
+{
+private:
+	Complex cpl;
+	int data;
+	static allocator_m alloc;
+public:
+	Goo(int i) : data(i) {}
+	void* operator new(size_t size) {
+		return alloc.allocate(size);
+	}
+	void operator delete(void* pDead, size_t size) {
+		alloc.deallocate(pDead, size);
+	}
+};
+
+allocator_m Goo::alloc;
+//****************macro for static allocator *****************************//
+//used in class definition
+#define DECLARE_POOL_ALLOC() \
+public: \
+void* operator new(size_t size) { return myAlloc.allocate(size); } \
+void operator delete(void* pDead, size_t size) { myAlloc.deallocate(pDead, size); } \
+protected: \
+static allocator_m myAlloc;
+
+//used in class implementation
+#define IMPLEMENT_POOL_ALLOC(class_name) \
+allocator_m class_name::myAlloc;
+class Foo2
+{
+	DECLARE_POOL_ALLOC();
+private:
+	long lData;
+	string str;
+public:
+	Foo2(long l) : lData(l) {}
+
+
+};
+
+IMPLEMENT_POOL_ALLOC(Foo2);
+
+class Goo2
+{
+	DECLARE_POOL_ALLOC();
+
+private:
+	Complex cpl;
+	int data;
+
+public:
+	Goo2(int i) : data(i) {}
+};
+
+IMPLEMENT_POOL_ALLOC(Goo2);
+
+
 #endif // !__ALLOCATOR_TEST__
 
 

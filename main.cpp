@@ -10,7 +10,8 @@ int main() {
 	//basic_test2();
 	//basic_test4();
 	//basic_test6();
-	basic_test7();
+	//basic_test7();
+	basic_test8();
 	
 	//std_test1();
 	//std_test2();

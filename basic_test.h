@@ -9,4 +9,5 @@ int basic_test4();
 int basic_test5();
 int basic_test6();
 int basic_test7();
+int basic_test8();
 #endif

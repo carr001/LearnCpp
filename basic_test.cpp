@@ -173,3 +173,30 @@ int basic_test7() {
 	f = static_cast<float>(n);
 	return 0;
 }
+
+int basic_test8() {
+	cout << "####################  in basic_test 8 ##################" << endl;
+	// union test  from https://www.youtube.com/watch?v=6uqU9Y578n4
+	struct Union1 {
+		union 
+		{
+			float a;
+			int b;
+		};
+	};
+	struct Union2 {
+		union
+		{
+			double a;
+			int b;
+		};
+	};
+	Union1 s;
+	Union2 s2;
+	s.a = 2.0f;
+	cout << s.a << ", " << s.b << endl;// 输出2, 1073741824，后者是浮点2的整形表示。另外，union常常是匿名的，出现在struct或者Union中，可以直接当作成员变量，但是这个角度可以通过两种方式处理（float和int）
+	cout << "Union1 size= " << sizeof(s) << endl;
+	cout << "Union2 size= " << sizeof(s2) << endl;// 说明union分配的是成员中占内存最大者所需的容量
+
+	return 0;
+}
