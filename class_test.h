@@ -215,6 +215,19 @@ public:
 	virtual void vfunc1()const {};
 	void func2() {};
 };
+class A3 {
+public:
+	virtual void vfunc1()const {};
+	virtual void vfunc2()const {};
+
+	void func1() {};
+	void func2() {};
+};
+class C2 :public B,public A3 {
+public:
+	virtual void vfunc1()const {};
+	void func2() {};
+};
 #endif // !__CLASS_TEST__
 
 

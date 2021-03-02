@@ -150,3 +150,27 @@ int class_test11() {
 	obj3->~A2();
 	return 0;
 }
+int class_test12() {
+	cout << "########################### in class_test12 ###################" << endl;
+	// https://www.nowcoder.com/profile/407034319/test/40945114/1246#summary   
+	// quiz 9
+	// ÀàÐÍ×ª»»
+
+	typedef A2 ClassA ;
+	typedef A3 ClassB ;
+	typedef C2 ClassC ;
+
+	ClassC aObject;
+	ClassA* pA = &aObject;
+	ClassB* pB = &aObject;
+	ClassC* pC = &aObject;
+	ClassA* pA2;
+
+	//pA2 = static_cast<ClassA*>(pB); //error
+
+	void* pVoid = static_cast<void*>(pB);
+	pA2 = static_cast<ClassA*>(pVoid);
+
+	pA2 = static_cast<ClassA*>(static_cast<ClassC*>(pB));
+	return 0;
+}

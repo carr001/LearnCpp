@@ -39,6 +39,9 @@
     <ClCompile Include="template_test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="c_test.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="std_test.h">
@@ -63,6 +66,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="template_test.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="c_test.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

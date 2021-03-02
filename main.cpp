@@ -4,9 +4,14 @@
 #include"basic_test.h"
 #include"para_test.h"
 #include"class_test.h"
+#include"c_test.h"
 //#include"datastructure_test.h"
 using namespace std;
 int main() {
+	//c_test1();
+	//c_test2();
+	c_test3();
+
 	//basic_test2();
 	//basic_test4();
 	//basic_test6();

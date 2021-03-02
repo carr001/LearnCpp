@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="class_test.cpp" />
+    <ClCompile Include="c_test.cpp" />
     <ClCompile Include="datastructure_test.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="basic_test.cpp" />
@@ -157,6 +158,7 @@
   <ItemGroup>
     <ClInclude Include="basic_test1.h" />
     <ClInclude Include="class_test.h" />
+    <ClInclude Include="c_test.h" />
     <ClInclude Include="datastructure_test.h" />
     <ClInclude Include="basic_test.h" />
     <ClInclude Include="para_test.h" />
