@@ -36,19 +36,43 @@ void c_test3() {
 }
 void c_test3() {
 	cout << "########################### in c_test4 ###################" << endl;
-	int aa = 3;
-	const int a=2; // a 是常数
-	int const b=20; // a 是常数
+	int a = 3;	int t = 200;
+	const int aa=2; // aa 是常数
+	int const aaa=20; // aaa 是常数
 
-	int const* c =&a; // a 是常量指针
-	const int* d =&a; // a 是常量指针
-	const int* const e = &a; // a 是常量指针
-	int* const e = &aa; // a 是常量指针
-	//int* const e = &a; 
-	//int* const e = &b; 
-	
-	d = &b;
-	c = &b;
+	//================== int* const 指针常量，内容必须可变，指针不可变 ==========//
+	int* const b =&a;
+	//int* const bb =&aa;
+	//int* const bbb =&aaa;
+	*b = 2;
+	//b = &t;
+
+	//================== int* const，可以指向const或者non-const指针，指针可变，内容不可变 ==========//
+	const int* c = &a;
+	const int* cc =&aa;
+	const int* ccc =&aaa;
 	//*c = 2;
+	c = &t;
+	//*cc = 2;
+	cc = &t;
+
+	//================== int const*，可以指向const或者non-const指针，指针可变，内容不可变 ==========//
+	int const* d = &a;
+	int const* dd = &aa;
+	int const* ddd = &aaa;
 	//*d = 2;
+	d = &t;
+	//*dd = 2;
+	dd = &t;
+	
+	//================== int const*，可以指向const或者non-const指针，指针可变，内容不可变 ==========//
+	const int* const e = &a;
+	const int* const ee = &aa;
+	const int* const eee = &aaa;
+	//*e = 2;
+	//e = &t;
+	//*ee = 2;
+	//ee = &t;
+
+	// 总结：注意第二和第三种情况是一样的
 }
